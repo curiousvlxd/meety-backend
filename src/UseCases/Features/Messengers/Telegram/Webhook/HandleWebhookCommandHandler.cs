@@ -1,10 +1,10 @@
 using UseCases.Abstractions.Messaging;
-namespace UseCases.Webhook;
+namespace UseCases.Features.Messengers.Telegram.Webhook;
 
-public class HandleWebhookCommandHandler: ICommand
+public sealed class HandleWebhookCommandHandler: ICommand
 {
-    public async Task Handle(HandleWebhookCommand referenceCommand, CancellationToken cancellationToken)
+    public async Task Handle(HandleWebhookCommand command, CancellationToken cancellationToken)
     {
-        Console.WriteLine("HandleWebhookCommandHandler");
+        
     }
 }

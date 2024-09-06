@@ -1,7 +1,7 @@
 using UseCases.Abstractions.Messaging;
-namespace UseCases.Webhook;
+namespace UseCases.Features.Messengers.Telegram.Webhook;
 
-public class HandleWebhookCommand: ICommand
+public sealed record HandleWebhookCommand: ICommand
 {
     
 }

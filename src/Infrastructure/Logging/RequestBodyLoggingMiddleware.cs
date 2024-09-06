@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Serilog;
 namespace Infrastructure.Logging;
 
-internal class RequestBodyLoggingMiddleware(RequestDelegate next, ILogger logger)
+public class RequestBodyLoggingMiddleware(RequestDelegate next, ILogger logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {

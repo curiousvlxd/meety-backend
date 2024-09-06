@@ -1,12 +1,11 @@
-﻿using Infrastructure.Telegram.TelegramOptions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UseCases.Abstractions;
 namespace UseCases;
 
 public static class HostBuilderExtension
 {
-    public static void ConfigureInfrastructureLayer(this IHostApplicationBuilder hostBuilder)
+    public static void ConfigureUseCaseLayer(this IHostApplicationBuilder hostBuilder)
     {
         hostBuilder.ConfigureMediatr();
     }

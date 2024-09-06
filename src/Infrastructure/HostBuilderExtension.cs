@@ -1,6 +1,5 @@
 ﻿
-using Infrastructure.Telegram;
-using Infrastructure.Telegram.TelegramOptions;
+using Infrastructure.Messenger.MessengerOptions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,11 +9,11 @@ public static class HostBuilderExtension
 {
     public static void ConfigureInfrastructureLayer(this IHostApplicationBuilder hostBuilder)
     {
-        hostBuilder.ConfigureTelegram();
+        hostBuilder.ConfigureMessenger();
     }
 
-    private static void ConfigureTelegram(this IHostApplicationBuilder hostBuilder)
+    private static void ConfigureMessenger(this IHostApplicationBuilder hostBuilder)
     {
-        hostBuilder.Services.ConfigureOptions<TelegramOptionsSetup>();
+        hostBuilder.Services.ConfigureOptions<MessengerOptionsSetup>();
     }
 }

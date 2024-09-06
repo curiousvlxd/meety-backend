@@ -97,8 +97,6 @@ public static class HostBuilderExtensions
 
         services.AddSwaggerGen(options =>
         {
-            var xmlFilename = $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml";
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
             var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
             foreach (var description in provider.ApiVersionDescriptions)
             {

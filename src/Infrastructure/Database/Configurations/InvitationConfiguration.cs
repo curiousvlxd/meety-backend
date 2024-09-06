@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-public class ParticipationEntityConfiguration: BaseEntityConfiguration<Invitation>
+internal class InvitationConfiguration : EntityConfiguration<Invitation>
 {
     public override void Configure(EntityTypeBuilder<Invitation> builder)
     {
@@ -11,9 +11,9 @@ public class ParticipationEntityConfiguration: BaseEntityConfiguration<Invitatio
 
         builder.ToTable("Meetings");
         
-        builder.Property(p => p.Id).HasConversion(
-            participationId => participationId.Value,
-            value => new InvitationId(value));
+        builder.Property(p => p.Id)
+            .HasConversion(participationId => participationId.Value,
+                value => new InvitationId(value));
         
         builder.HasOne(e => e.Meeting)
             .WithMany(e => e.Invitations)
@@ -23,6 +23,10 @@ public class ParticipationEntityConfiguration: BaseEntityConfiguration<Invitatio
         builder.HasOne(e => e.User)
             .WithMany(e => e.Invitations)
             .HasForeignKey(e => e.UserId)
+            .IsRequired();
+        
+        builder.Property(u => u.Status)
+            .HasColumnType("smallint")
             .IsRequired();
     }
 }

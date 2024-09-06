@@ -1,51 +1,70 @@
-namespace Api;
+using Api;
+using Infrastructure;
+using Infrastructure.Authentication;
+using Infrastructure.Logging;
+using UseCases;
+LoggingConfiguration.ConfigureSerilog();
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddSerilog();
+builder.Services.AddEndpoints(typeof(Program).Assembly);
+builder.Services.AddEndpointsApiExplorer();
+builder.ConfigureInfrastructureLayer();
+builder.ConfigureUseCasesLayer();
+builder.AddServiceDefaults();
+RegisterHttpClients(builder);
+AddAuthentication(builder);
+AddHttpAccessor(builder);
+ConfigureSwagger(builder);
+builder.DisableHttp3();
+
+var app = builder.Build();
+var versionGroup = app.GetVersionGroup();
+
+app.UseExceptionHandler(opt => { });
+app.UseForwardedHeaders();
+app.UseCompression();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapEndpoints(versionGroup);
+app.MapDefaultEndpoints();
+app.AddRequestLogging();
+
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
-    public static void Main(string[] args)
+    app.UseDefaultOpenApi();
+}
+
+await app.RunAsync();
+return;
+
+void AddAuthentication(IHostApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.AddAuthentication();
+}
+
+void RegisterHttpClients(IHostApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.AddHttpClient();
+}
+
+
+void AddHttpAccessor(IHostApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+}
+
+void ConfigureSwagger(IHostApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.ConfigureSwaggerGen(c =>
     {
-        var builder = WebApplication.CreateBuilder(args);
+        c.UseAllOfToExtendReferenceSchemas();
+        c.UseAllOfForInheritance();
+        c.UseOneOfForPolymorphism();
 
-        // Add services to the container.
-        builder.Services.AddAuthorization();
+        string[] discriminatorTypes = [];
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                        new WeatherForecast
-                        {
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                            TemperatureC = Random.Shared.Next(-20, 55),
-                            Summary = summaries[Random.Shared.Next(summaries.Length)]
-                        })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast")
-            .WithOpenApi();
-
-        app.Run();
-    }
+        c.SelectDiscriminatorNameUsing(type => discriminatorTypes.Contains(type.Name) ? "$type" : null);
+    });
 }

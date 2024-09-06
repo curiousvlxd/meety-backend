@@ -1,4 +1,5 @@
 using Api;
+using Api.Configurations;
 using Infrastructure;
 using Infrastructure.Authentication;
 using Infrastructure.Logging;

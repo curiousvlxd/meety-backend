@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Infrastructure.Logging;
 using Serilog;
 using Serilog.Events;
-namespace Infrastructure.Logging;
+namespace Api.Configurations;
 
 public static class LoggingConfiguration
 {

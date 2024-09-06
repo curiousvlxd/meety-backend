@@ -1,5 +1,5 @@
 using MediatR;
-using UseCases.Webhook;
+using UseCases.Features.Messengers.Telegram.Webhook;
 namespace Api.Apis;
 
 public static class MessengerWebhookEndpoint

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Serilog;
 namespace Infrastructure.Logging.Pipeline;
 
 public class LoggingBehavior<TRequest, TResponse>(ILogger logger)

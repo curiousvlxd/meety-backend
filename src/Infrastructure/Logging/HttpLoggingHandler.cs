@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Serilog;
 namespace Infrastructure.Logging;
 
 public class HttpLoggingHandler(ILogger logger) : DelegatingHandler

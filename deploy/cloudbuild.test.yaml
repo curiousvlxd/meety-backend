@@ -1,0 +1,28 @@
+steps:
+  - name: 'mcr.microsoft.com/dotnet/sdk:8.0'
+    args:
+      - '-c'
+      - |
+        if [ "${_RUN_TESTS}" = "true" ]; then
+          dotnet test $_TEST_PROJECT -c Release --logger "console;verbosity=detailed"
+        else
+          echo "Skipping tests"
+        fi
+    id: Test
+    entrypoint: bash
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--no-cache'
+      - '-f'
+      - $_DOCKERFILE_PATH
+      - .
+    id: Build
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _PLATFORM: managed
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed

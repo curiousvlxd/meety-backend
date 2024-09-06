@@ -21,5 +21,6 @@ public static class HostBuilderExtensions
         JsonWebTokenHandler.DefaultMapInboundClaims = true;
         JsonWebTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub] = UserClaims.Sub;
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+        builder.Services.AddAuthorization();
     }
 }

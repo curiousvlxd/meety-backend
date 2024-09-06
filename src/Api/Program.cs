@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.ConfigureInfrastructureLayer();
 builder.ConfigureUseCasesLayer();
 builder.AddServiceDefaults();
+builder.AddAuthentication();
 RegisterHttpClients(builder);
 AddAuthentication(builder);
 AddHttpAccessor(builder);

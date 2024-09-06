@@ -9,7 +9,7 @@ using UseCases.Features.Messengers.Telegram.Webhook;
 namespace Api.Endpoints.Messengers.Telegram;
 
 /// <summary>
-/// Represents the endpoint for getting social media.
+/// Represents the endpoint for handling webhook.
 /// </summary>
 public class HandleWebhookEndpoint : IEndpoint
 {

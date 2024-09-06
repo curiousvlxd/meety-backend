@@ -12,6 +12,7 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.7.24405.7" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.7.24405.7" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0-preview.7.24405.7" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
 </Project>

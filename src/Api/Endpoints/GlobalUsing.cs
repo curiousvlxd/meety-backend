@@ -1,1 +1,1 @@
-﻿global using Constants = using Api.Configurations.EndpointConstants;
+global using Constants = using Api.Configurations.EndpointConstants;

@@ -3,7 +3,8 @@ namespace Domain.Entities.User;
 
 public class User : Entity
 {
-    public required UserId Id { get; set; }
-    public string Name { get; set; }
-    public string UserName { get; set; }
+    public required new UserId Id { get; set; }
+    public required string Email { get; set; }
+    public MessengerProfile.MessengerProfile? MessengerProfile { get; set; }
+    public ICollection<Participant.Participation> Participations { get; } = [];
 }

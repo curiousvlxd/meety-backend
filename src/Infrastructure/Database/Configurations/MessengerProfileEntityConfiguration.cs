@@ -11,6 +11,10 @@ public class MessengerProfileEntityConfiguration: BaseEntityConfiguration<Messen
 
         builder.ToTable("MessengerProfiles");
 
+        builder.Property(p => p.Id).HasConversion(
+            messengerProfile => messengerProfile.Value,
+            value => new MessengerProfileId(value));
+        
         builder.Property(p => p.Name)
             .HasMaxLength(64);
 

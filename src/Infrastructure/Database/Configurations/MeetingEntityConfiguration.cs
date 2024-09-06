@@ -11,6 +11,10 @@ public class MeetingEntityConfiguration: BaseEntityConfiguration<Meeting>
 
         builder.ToTable("Meetings");
         
+        builder.Property(p => p.Id).HasConversion(
+            meetingId => meetingId.Value,
+            value => new MeetingId(value));
+        
         builder.Property(p => p.Status)
             .IsRequired();
         

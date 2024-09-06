@@ -9,5 +9,5 @@ public class Meeting : Entity
     public required string Name { get; set; }
     public required DateTime Scheduled { get; set; }
     public MeetingStatus Status { get; set; } = MeetingStatus.Scheduled;
-    public ICollection<Participant.Participation> Participations { get; } = [];
+    public ICollection<Participation.Participation> Participations { get; } = [];
 }

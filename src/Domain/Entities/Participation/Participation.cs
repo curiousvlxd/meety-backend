@@ -1,12 +1,12 @@
 ﻿using Domain.Entities.Meeting;
 using Domain.Entities.User;
 using Domain.Primitives;
-namespace Domain.Entities.Participant;
+namespace Domain.Entities.Participation;
 
 public sealed class Participation : Entity
 {
     public required new ParticipantId Id { get; set; }
-    public required DateTime Invited { get; set; }
+    public required DateTime Visited { get; set; }
     public MeetingId MeetingId { get; set; }
     public Meeting.Meeting Meeting { get; set; } = null!;
     public UserId UserId { get; set; }

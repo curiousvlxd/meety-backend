@@ -8,7 +8,6 @@ public class BaseEntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.HasKey(k => k.Id);
-        builder.Property(p => p.Id).HasColumnName("Id");
         builder.Property(p => p.Created).HasColumnName("CreatedDateTime").IsRequired();
     }
 }

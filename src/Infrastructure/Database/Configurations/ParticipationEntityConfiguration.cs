@@ -1,4 +1,4 @@
-using Domain.Entities.Participant;
+using Domain.Entities.Participation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
@@ -10,6 +10,10 @@ public class ParticipationEntityConfiguration: BaseEntityConfiguration<Participa
         base.Configure(builder);
 
         builder.ToTable("Meetings");
+        
+        builder.Property(p => p.Id).HasConversion(
+            participationId => participationId.Value,
+            value => new ParticipantId(value));
         
         builder.HasOne(e => e.Meeting)
             .WithMany(e => e.Participations)

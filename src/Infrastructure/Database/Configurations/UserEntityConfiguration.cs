@@ -11,6 +11,10 @@ public class UserEntityConfiguration: BaseEntityConfiguration<User>
         base.Configure(builder);
 
         builder.ToTable("Users");
+        
+        builder.Property(p => p.Id).HasConversion(
+            userId => userId.Value,
+            value => new UserId(value));
 
         builder.Property(p => p.Email)
             .HasMaxLength(64)

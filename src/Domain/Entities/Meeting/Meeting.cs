@@ -8,6 +8,7 @@ public class Meeting : Entity
     public UserId CreatorId { get; set; }
     public required string Name { get; set; }
     public required DateTime Scheduled { get; set; }
+    public required string Url { get; set; }
     public MeetingStatus Status { get; set; } = MeetingStatus.Scheduled;
-    public ICollection<Participation.Participation> Participations { get; } = [];
+    public ICollection<Invitation.Invitation> Invitations { get; } = [];
 }

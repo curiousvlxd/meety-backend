@@ -22,7 +22,7 @@ public class MeetingEntityConfiguration: BaseEntityConfiguration<Meeting>
             .HasMaxLength(64)
             .IsRequired();
         
-        builder.HasMany(e => e.Participations)
+        builder.HasMany(e => e.Invitations)
             .WithOne(e => e.Meeting)
             .HasForeignKey(e => e.MeetingId)
             .IsRequired();

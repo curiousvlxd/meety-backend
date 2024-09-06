@@ -6,7 +6,7 @@ using UseCases.Features.Messengers.Telegram.Webhook;
 
 #endregion
 
-namespace Api.Endpoints.Messengers.Telegram;
+namespace Api.Apis.Messengers.Telegram;
 
 /// <summary>
 /// Represents the endpoint for getting social media.

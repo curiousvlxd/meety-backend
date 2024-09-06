@@ -1,5 +1,5 @@
 ﻿using MediatR;
-namespace Api.Endpoints.Messengers.Telegram;
+namespace Api.Apis.Messengers.Telegram;
 
 public class TelegramServices(
     ILogger<TelegramServices> logger,

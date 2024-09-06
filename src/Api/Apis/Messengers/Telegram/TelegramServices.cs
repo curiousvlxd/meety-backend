@@ -1,13 +1,10 @@
 ﻿using MediatR;
-using Telegram.Bot;
-namespace Api.Endpoints.Messengers.Telegram;
+namespace Api.Apis.Messengers.Telegram;
 
 public class TelegramServices(
     ILogger<TelegramServices> logger,
-    IMediator mediator, 
-    TelegramBotClient bot)
+    IMediator mediator)
 {
     public ILogger<TelegramServices> Logger => logger;
     public IMediator Mediator => mediator;
-    public TelegramBotClient Bot => bot;
 }

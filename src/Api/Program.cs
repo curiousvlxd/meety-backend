@@ -16,6 +16,7 @@ builder.ConfigureUseCasesLayer();
 builder.AddServiceDefaults();
 RegisterHttpClients(builder);
 AddAuthentication(builder);
+AddAuthorization(builder);
 AddHttpAccessor(builder);
 ConfigureSwagger(builder);
 builder.DisableHttp3();
@@ -43,6 +44,11 @@ return;
 void AddAuthentication(IHostApplicationBuilder webApplicationBuilder)
 {
     webApplicationBuilder.AddAuthentication();
+}
+
+void AddAuthorization(IHostApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.AddAuthorizationBuilder();
 }
 
 void RegisterHttpClients(IHostApplicationBuilder webApplicationBuilder)

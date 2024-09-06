@@ -2,6 +2,9 @@
 
 using Api.Abstractions;
 using Api.Extensions;
+using Infrastructure.Messenger.Telegram.ChatDistributor;
+using Microsoft.AspNetCore.Mvc;
+using Telegram.Bot.Types;
 using UseCases.Features.Messengers.Telegram.Webhook;
 
 #endregion
@@ -23,9 +26,9 @@ public class HandleWebhookEndpoint : IEndpoint
                 StatusCodes.Status404NotFound);
     }
 
-    private static async Task<IResult> HandleWebhook([AsParameters] TelegramServices services)
-    {
-       await services.Mediator.Send(new HandleWebhookCommand());
+    private static async Task<IResult> HandleWebhook([FromBody] HandleWebhookCommand command, [AsParameters] TelegramServices services)
+    { 
+       await services.Mediator.Send(command);
        return Results.Ok();
     }
 }

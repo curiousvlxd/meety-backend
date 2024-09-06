@@ -2,6 +2,9 @@
 using Infrastructure.Database;
 using Infrastructure.Database.Options;
 using Infrastructure.Messenger.MessengerOptions;
+using Infrastructure.Messenger.Telegram.BotCommandHandler;
+using Infrastructure.Messenger.Telegram.ChatDistributor;
+using Infrastructure.Messenger.Telegram.TelegramBot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,11 +18,22 @@ public static class HostBuilderExtensions
     {
         hostBuilder.ConfigureMessenger();
         hostBuilder.ConfigureDatabase();
+        hostBuilder.ConfigureTelegramBot();
     }
 
     private static void ConfigureMessenger(this IHostApplicationBuilder hostBuilder)
     {
         hostBuilder.Services.ConfigureOptions<MessengerOptionsSetup>();
+    }
+    
+    private static void ConfigureChatDistributor(this IHostApplicationBuilder hostBuilder)
+    {
+        hostBuilder.Services.AddScoped<IChatDistributor, ChatDistributor>();
+    }
+    
+    private static void ConfigureTelegramBot(this IHostApplicationBuilder hostBuilder)
+    {
+        hostBuilder.Services.AddSingleton<ITelegramBot, TelegramBot>();
     }
 
     private static void ConfigureDatabase(this IHostApplicationBuilder hostBuilder)
@@ -34,14 +48,5 @@ public static class HostBuilderExtensions
             options.EnableSensitiveDataLogging();
             options.EnableDetailedErrors();
         });
-    }
-    
-    private static void RegisterRepositories(IHostApplicationBuilder builder)
-    {
-       
-    }
-    
-    private static void RegisterServices(IHostApplicationBuilder builder)
-    {
     }
 }

@@ -23,6 +23,7 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.7.24405.7" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0-preview.7.24405.7" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-preview.7" />
+      <PackageReference Include="Telegram.Bot" Version="19.0.0" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 

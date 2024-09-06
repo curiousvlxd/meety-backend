@@ -2,7 +2,6 @@
 
 using Api.Abstractions;
 using Api.Extensions;
-using Infrastructure.Messenger.Telegram.BotCommandHandler;
 using Infrastructure.Messenger.Telegram.ChatDistributor;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot.Types;

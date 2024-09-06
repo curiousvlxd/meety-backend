@@ -2,7 +2,6 @@
 using Infrastructure.Database;
 using Infrastructure.Database.Options;
 using Infrastructure.Messenger.MessengerOptions;
-using Infrastructure.Messenger.Telegram.BotCommandHandler;
 using Infrastructure.Messenger.Telegram.ChatDistributor;
 using Infrastructure.Messenger.Telegram.TelegramBot;
 using Microsoft.EntityFrameworkCore;

@@ -7,11 +7,9 @@ namespace Api.Apis.Messengers.Telegram;
 public class TelegramServices(
     ILogger<TelegramServices> logger,
     IMediator mediator,
-    ITelegramBot bot,
-    IChatDistributor chatDistributor)
+    ITelegramBot bot)
 {
     public ILogger<TelegramServices> Logger => logger;
     public IMediator Mediator => mediator;
     public ITelegramBot Bot => bot;
-    public IChatDistributor ChatDistributor => chatDistributor;
 }

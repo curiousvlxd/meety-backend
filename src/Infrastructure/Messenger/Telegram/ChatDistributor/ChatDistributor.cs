@@ -1,5 +1,5 @@
-using Infrastructure.Messenger.Telegram.BotCommandHandler;
 using Infrastructure.Messenger.Telegram.TelegramBot;
+using Infrastructure.Messenger.Telegram.TelegramUpdateListener;
 using Telegram.Bot.Types;
 namespace Infrastructure.Messenger.Telegram.ChatDistributor;
 
@@ -17,12 +17,12 @@ public class ChatDistributor(ITelegramBot telegramBot): IChatDistributor
         
         if (listener is null)
         {
-            listener = new TelegramUpdateListener(telegramBot.GetTelegramBotClient());
+            listener = new TelegramUpdateListener.TelegramUpdateListener(telegramBot.GetTelegramBotClient());
             _listeners.Add(chatId, listener);
-            await listener.GetUpdate(update);
+            await listener.ProcessUpdate(update);
             return;
         }
         
-        await listener.GetUpdate(update);
+        await listener.ProcessUpdate(update);
     }
 }

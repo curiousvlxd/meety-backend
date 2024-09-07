@@ -4,7 +4,14 @@ namespace Infrastructure.Database.Options;
 
 public class DatabaseOptionsSetup(IConfiguration configuration): IConfigureOptions<DatabaseOptions>
 {
-    private const string SectionName = "Database";
+    private const string SectionName = "Postgres";
 
-    public void Configure(DatabaseOptions options) => configuration.GetSection(SectionName).Bind(options);
+    public void Configure(DatabaseOptions options)
+    {
+        var postgres = configuration.GetConnectionString(SectionName);
+        
+        if (string.IsNullOrWhiteSpace(postgres)) throw new InvalidOperationException($"Connection string for {SectionName} is missing.");
+        
+        options.Postgres = postgres;
+    }
 }

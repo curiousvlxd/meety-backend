@@ -13,4 +13,15 @@ public abstract class Entity
     {
         _domainEvents.Add(domainEvent);
     }
+    
+    
+    public void OnCreated()
+    {
+        Created = DateTime.UtcNow;
+    }
+    
+    public void OnUpdated()
+    {
+        Updated = DateTime.UtcNow;
+    }
 }

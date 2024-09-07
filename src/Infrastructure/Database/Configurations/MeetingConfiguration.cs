@@ -8,8 +8,6 @@ internal class MeetingConfiguration : EntityConfiguration<Meeting>
 {
     public override void Configure(EntityTypeBuilder<Meeting> builder)
     {
-        base.Configure(builder);
-
         builder.ToTable("meetings");
         
         builder.Property(p => p.Id).HasConversion(

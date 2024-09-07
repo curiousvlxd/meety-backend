@@ -13,4 +13,5 @@ public sealed class Invitation : Entity
     public User.User? Invitee { get; set; }
     public required UserId InviterId { get; set; }
     public User.User? Inviter { get; set; }
+    public required string Url { get; set; }
 }

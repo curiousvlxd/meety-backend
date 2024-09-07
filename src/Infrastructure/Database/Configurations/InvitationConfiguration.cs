@@ -9,8 +9,6 @@ internal class InvitationConfiguration : EntityConfiguration<Invitation>
 {
     public override void Configure(EntityTypeBuilder<Invitation> builder)
     {
-        base.Configure(builder);
-
         builder.ToTable("invitations");
 
         builder.Property(p => p.Id)

@@ -7,8 +7,6 @@ internal class UserConfiguration : EntityConfiguration<User>
 {
     public override void Configure(EntityTypeBuilder<User> builder)
     {
-        base.Configure(builder);
-
         builder.ToTable("users");
 
         builder.HasMany(e => e.ReceivedInvitations)

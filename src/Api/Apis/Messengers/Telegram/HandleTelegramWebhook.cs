@@ -4,18 +4,13 @@ using Api.Abstractions;
 using Api.Extensions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using UseCases.Features.Messengers.Telegram.Webhook;
 using UseCases.Features.Messengers.Telegram.Webhook.Auth;
-using UseCases.Features.Messengers.Telegram.Webhook.Auth.Dtos;
 
 #endregion
 
 namespace Api.Apis.Messengers.Telegram;
 
-/// <summary>
-/// Represents the endpoint for getting social media.
-/// </summary>
-public class HandleWebhookEndpoint : IEndpoint
+public class HandleTelegramWebhookEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

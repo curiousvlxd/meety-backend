@@ -19,9 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.ConfigureInfrastructureLayer();
 builder.ConfigureUseCasesLayer();
 builder.AddServiceDefaults();
-builder.Services.AddControllers()
-    .AddNewtonsoftJson();
-
+builder.Services.AddControllers().AddNewtonsoftJson();
 RegisterHttpClients(builder);
 AddAuthentication(builder);
 AddAuthorization(builder);
@@ -88,7 +86,7 @@ void ConfigureSwagger(IHostApplicationBuilder webApplicationBuilder)
 
 void ConfigureSerialization(IHostApplicationBuilder webApplicationBuilder)
 {
-    builder.Services.Configure<JsonSerializerSettings>(options =>
+    webApplicationBuilder.Services.Configure<JsonSerializerSettings>(options =>
     {
         options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         options.Converters.Add(
@@ -97,7 +95,7 @@ void ConfigureSerialization(IHostApplicationBuilder webApplicationBuilder)
                 NamingStrategy = new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()
             });
     });
-    builder.Services.Configure<JsonOptions>(options =>
+    webApplicationBuilder.Services.Configure<JsonOptions>(options =>
     {
         options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.SerializerOptions.WriteIndented = true;

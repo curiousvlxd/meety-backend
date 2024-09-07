@@ -8,22 +8,22 @@ internal class UserConfiguration : EntityConfiguration<User>
     public override void Configure(EntityTypeBuilder<User> builder)
     {
         base.Configure(builder);
-        
+
         builder.ToTable("users");
-        
+
         builder.HasMany(e => e.ReceivedInvitations)
             .WithOne(e => e.Invitee)
-            .HasForeignKey(e => e.Invitee)
+            .HasForeignKey(e => e.InviteeId)
             .IsRequired();
         
         builder.HasMany(e => e.SentInvitations)
             .WithOne(e => e.Inviter)
-            .HasForeignKey(e => e.Inviter)
+            .HasForeignKey(e => e.InviterId)
             .IsRequired();
         
         builder.HasMany(e => e.Meetings)
             .WithOne(e => e.Creator)
-            .HasForeignKey(e => e.Creator)
+            .HasForeignKey(e => e.CreatorId)
             .IsRequired();
         
         builder.Property(p => p.Id)
@@ -36,10 +36,11 @@ internal class UserConfiguration : EntityConfiguration<User>
         
         builder.Property(p => p.ChatId)
             .HasConversion(chatId => chatId.Value,
-            value => new ChatId(value));
+                value => new ChatId(value));
         
         builder.Property(u => u.MessengerType)
             .HasColumnType("smallint")
             .IsRequired();
     }
 }
+

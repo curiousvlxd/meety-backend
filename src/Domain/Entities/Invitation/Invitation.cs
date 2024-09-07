@@ -11,7 +11,6 @@ public sealed class Invitation : Entity
     public Meeting.Meeting? Meeting { get; set; }
     public required UserId InviteeId { get; set; }
     public User.User? Invitee { get; set; }
-    
     public required UserId InviterId { get; set; }
     public User.User? Inviter { get; set; }
 }

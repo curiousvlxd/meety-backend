@@ -4,4 +4,5 @@ public sealed record Pagination
 {
     public int PageNumber { get; init; }
     public int PageSize { get; init; }
+    public string UserId { get; init; }
 }

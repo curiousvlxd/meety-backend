@@ -20,8 +20,7 @@ public class GetMeetingsByUserEndpoint : IEndpoint
 
     private static async Task<IResult> GetCurrentUser([AsParameters] Pagination pagination, [AsParameters] MeetingServices services)
     {   
-       var userId = services.HttpContextAccessor.GetUserId();
-       var query = new GetMeetingsByUserQuery(userId, pagination);
+       var query = new GetMeetingsByUserQuery(pagination.UserId, pagination);
        var response = await services.Mediator.Send(query);
        return Results.Ok(response);
     }

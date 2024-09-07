@@ -51,9 +51,10 @@ public class HandleWebhookEndpoint : IEndpoint
                 var response = await services.Mediator.Send(new HandleAuthCommand(chatId, userId.Value, userName, true));
                 return response is null ? Results.Unauthorized() : Results.Ok(response);
             }
-            default:
-                return Results.Ok();
         }
 
+        await services.TelegramUpdateListener.ProcessUpdate(update);
+
+        return Results.Ok();
     }
 }

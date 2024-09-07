@@ -73,7 +73,8 @@ public static class HostBuilderExtensions
                 options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();
             })
-            .AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+            .AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>())
+            .AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
     }
     
     private static void RegisterRepositories(this IHostApplicationBuilder builder)

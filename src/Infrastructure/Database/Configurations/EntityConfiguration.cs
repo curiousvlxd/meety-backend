@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-internal class EntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : Entity
+public class BaseEntityConfiguration<TEntity>  : IEntityTypeConfiguration<TEntity> 
+    where TEntity : Entity
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {

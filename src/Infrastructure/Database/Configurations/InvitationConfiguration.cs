@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-internal class InvitationConfiguration : IEntityTypeConfiguration<Invitation>
+internal class InvitationConfiguration : BaseEntityConfiguration<Invitation>
 {
-    public void Configure(EntityTypeBuilder<Invitation> builder)
-    {
+    public override void Configure(EntityTypeBuilder<Invitation> builder)
+    {       
+        base.Configure(builder);
         builder.ToTable("invitations");
 
         builder.Property(p => p.Id)

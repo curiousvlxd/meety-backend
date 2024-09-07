@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-internal class MeetingConfiguration : IEntityTypeConfiguration<Meeting>
+internal class MeetingConfiguration : BaseEntityConfiguration<Meeting>
 {
-    public void Configure(EntityTypeBuilder<Meeting> builder)
-    {
+    public override void Configure(EntityTypeBuilder<Meeting> builder)
+    {   
+        base.Configure(builder);
         builder.ToTable("meetings");
         
         builder.Property(p => p.Id).HasConversion(

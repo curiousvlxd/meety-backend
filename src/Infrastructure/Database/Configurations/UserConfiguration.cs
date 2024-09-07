@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-internal class UserConfiguration : IEntityTypeConfiguration<User>
+internal class UserConfiguration : BaseEntityConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
-    {
+    public override void Configure(EntityTypeBuilder<User> builder)
+    {   
+        base.Configure(builder);
         builder.ToTable("users");
 
         builder.HasMany(e => e.ReceivedInvitations)

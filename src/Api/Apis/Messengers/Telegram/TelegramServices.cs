@@ -14,5 +14,5 @@ public class TelegramServices(
     public IMediator Mediator => mediator;
     public ITelegramBotClient BotClient => botClient;
 
-    public ITelegramUpdateListener TelegramUpdateListener = telegramUpdateListener;
+    public ITelegramUpdateListener TelegramUpdateListener => telegramUpdateListener;
 }

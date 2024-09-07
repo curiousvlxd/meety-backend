@@ -33,20 +33,6 @@ public class HandleTelegramWebhookEndpoint : IEndpoint
         if (userId is null) return Results.BadRequest("User not found.");
             
         var userName = message.From?.Username;
-            
-        switch (message.Text)
-        {
-            case "/auth":
-            {
-                var response = await services.Mediator.Send(new HandleAuthCommand(chatId, userId.Value, userName));
-                return response is null ? Results.Unauthorized() : Results.Ok(response);
-            }
-            case "/refresh-token":
-            {
-                var response = await services.Mediator.Send(new HandleAuthCommand(chatId, userId.Value, userName, true));
-                return response is null ? Results.Unauthorized() : Results.Ok(response);
-            }
-        }
 
         await services.TelegramUpdateListener.ProcessUpdate(update);
 

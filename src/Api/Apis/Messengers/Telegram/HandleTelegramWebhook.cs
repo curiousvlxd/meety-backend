@@ -4,7 +4,6 @@ using Api.Abstractions;
 using Api.Extensions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using UseCases.Features.Messengers.Telegram.Webhook.Auth;
 
 #endregion
 

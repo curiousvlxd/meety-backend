@@ -7,11 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityFrameworkCore.Data.QueryBuilder.Abstractions" Version="8.0.2" />
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Entities\User\Events\" />
+      <PackageReference Include="Ulid" Version="1.3.4" />
+        
     </ItemGroup>
 
 </Project>

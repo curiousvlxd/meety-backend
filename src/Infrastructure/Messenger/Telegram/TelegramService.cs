@@ -1,6 +1,6 @@
 namespace Infrastructure.Messenger.Telegram;
 
-public class TelegramService : ITelegramService
+public sealed class TelegramService : ITelegramService
 {
     
 }

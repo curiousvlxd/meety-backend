@@ -2,7 +2,11 @@
 
 using Api.Abstractions;
 using Api.Extensions;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using UseCases.Features.Messengers.Telegram.Webhook;
+using UseCases.Features.Messengers.Telegram.Webhook.Auth;
+using UseCases.Features.Messengers.Telegram.Webhook.Auth.Dtos;
 
 #endregion
 
@@ -23,9 +27,33 @@ public class HandleWebhookEndpoint : IEndpoint
                 StatusCodes.Status404NotFound);
     }
 
-    private static async Task<IResult> HandleWebhook([AsParameters] TelegramServices services)
+    private static async Task<IResult> HandleWebhook(Update update, [AsParameters] TelegramServices services)
     {
-       await services.Mediator.Send(new HandleWebhookCommand());
-       return Results.Ok();
+        if (update is not { Type: UpdateType.Message, Message.Type: MessageType.Text }) return Results.Ok();
+        
+        var message = update.Message;
+        var chatId = message.Chat.Id;
+        var userId = message.From?.Id;
+            
+        if (userId is null) return Results.BadRequest("User not found.");
+            
+        var userName = message.From?.Username;
+            
+        switch (message.Text)
+        {
+            case "/auth":
+            {
+                var response = await services.Mediator.Send(new HandleAuthCommand(chatId, userId.Value, userName));
+                return response is null ? Results.Unauthorized() : Results.Ok(response);
+            }
+            case "/refresh-token":
+            {
+                var response = await services.Mediator.Send(new HandleAuthCommand(chatId, userId.Value, userName, true));
+                return response is null ? Results.Unauthorized() : Results.Ok(response);
+            }
+            default:
+                return Results.Ok();
+        }
+
     }
 }

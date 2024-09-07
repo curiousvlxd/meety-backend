@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Domain.Entities.User;
 using Infrastructure.Authentication.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -12,20 +13,48 @@ public sealed class JwtService(IOptions<JwtOptions> jwtOptions) : IJwtService
     private readonly TimeSpan _jwtTokenLifetime = TimeSpan.FromMinutes(15);
     private readonly TimeSpan _refreshTokenLifetime = TimeSpan.FromDays(1);
     
-    public async Task<string> GenerateJwtTokenAsync(string messengerUserId, bool isRefreshToken = false)
+    public async Task<string> GenerateJwtTokenAsync(UserId userId)
     {
         var claims = new List<Claim>
         {
-            new(UserClaims.Sub, messengerUserId)
+            new(ClaimTypes.NameIdentifier, userId.Value.ToString()),
+            new(JwtRegisteredClaimNames.Sub, userId.Value.ToString()),
         };
 
-        var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
+        var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtOptions.Secret));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.Add(isRefreshToken ? _refreshTokenLifetime : _jwtTokenLifetime),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+            Expires = DateTime.UtcNow.Add(_jwtTokenLifetime),
+            SigningCredentials = credentials,
+            Issuer = _jwtOptions.Issuer,
+            Audience = _jwtOptions.Audience
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return await Task.FromResult(tokenHandler.WriteToken(token));
+    }
+
+    public async Task<string> GenerateRefreshTokenAsync(UserId userId)
+    {
+        var claims = new List<Claim>
+        {
+            new(JwtRegisteredClaimNames.Sub, userId.Value.ToString()),
+            new("token_type", "refresh")
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtOptions.Secret));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.Add(_refreshTokenLifetime),
+            SigningCredentials = credentials,
             Issuer = _jwtOptions.Issuer,
             Audience = _jwtOptions.Audience
         };

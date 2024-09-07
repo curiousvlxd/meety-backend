@@ -1,4 +1,4 @@
 ﻿namespace Domain.Entities.Meeting;
 
-public readonly record struct MeetingId(Guid Value);
+public readonly record struct MeetingId(Ulid Value);
 

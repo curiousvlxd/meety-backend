@@ -9,6 +9,9 @@ public sealed class Invitation : Entity
     public required Status Status { get; set; }
     public required MeetingId MeetingId { get; set; }
     public Meeting.Meeting? Meeting { get; set; }
-    public required UserId UserId { get; set; }
-    public User.User? User { get; set; }
+    public required UserId InviteeId { get; set; }
+    public User.User? Invitee { get; set; }
+    
+    public required UserId InviterId { get; set; }
+    public User.User? Inviter { get; set; }
 }

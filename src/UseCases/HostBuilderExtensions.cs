@@ -13,7 +13,9 @@ public static class HostBuilderExtension
     {
         hostBuilder.ConfigureMediatr<UseCasesAssemblyReference>();
         hostBuilder.Services.AddValidatorsFromAssemblyContaining<UseCasesAssemblyReference>();
-        hostBuilder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        // hostBuilder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        // hostBuilder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
+        // hostBuilder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 
     private static void ConfigureMediatr<TAssemblyType>(this IHostApplicationBuilder hostBuilder)
@@ -21,6 +23,8 @@ public static class HostBuilderExtension
         hostBuilder.Services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(typeof(TAssemblyType).Assembly);
+            cfg.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
     }

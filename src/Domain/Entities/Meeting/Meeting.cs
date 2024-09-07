@@ -6,9 +6,10 @@ public class Meeting : Entity
 {
     public required MeetingId Id { get; set; }
     public UserId CreatorId { get; set; }
+    public User.User? Creator { get; set; }
     public required string Name { get; set; }
     public required DateTime Scheduled { get; set; }
     public required string Url { get; set; }
     public MeetingStatus Status { get; set; } = MeetingStatus.Scheduled;
-    public ICollection<Invitation.Invitation> Invitations { get; } = [];
+    public IEnumerable<Invitation.Invitation> Invitations { get; } = [];
 }

@@ -1,4 +1,5 @@
 using Domain.Entities.Meeting;
+using Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
@@ -12,8 +13,18 @@ internal class MeetingConfiguration : EntityConfiguration<Meeting>
         builder.ToTable("meetings");
         
         builder.Property(p => p.Id).HasConversion(
-            meetingId => meetingId.Value,
-            value => new MeetingId(value));
+            meetingId => meetingId.Value.ToString(),
+            value => new MeetingId(Ulid.Parse(value)));
+        
+        builder.Property(p => p.CreatorId).HasConversion(
+            userId => userId.Value.ToString(),
+            value => new UserId(Ulid.Parse(value)));      
+        
+        builder.HasOne(e => e.Creator)
+            .WithMany(e => e.Meetings)
+            .HasForeignKey(e => e.CreatorId)
+            .IsRequired();
+        
         
         builder.Property(p => p.Status)
             .IsRequired();

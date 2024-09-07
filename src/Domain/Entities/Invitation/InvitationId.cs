@@ -1,3 +1,3 @@
 ﻿namespace Domain.Entities.Invitation;
 
-public readonly record struct InvitationId(Guid Value);
+public readonly record struct InvitationId(Ulid Value);

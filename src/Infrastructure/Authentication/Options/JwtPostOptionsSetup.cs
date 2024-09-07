@@ -16,5 +16,6 @@ public sealed class JwtPostOptions(IOptions<JwtOptions> jwtOptions) : IPostConfi
         options.Authority = _jwtOptions.Issuer;
         options.Audience = _jwtOptions.Audience;
         options.TokenValidationParameters = DefaultTokenValidationParametersBuilder.Build(_jwtOptions);
+        options.RequireHttpsMetadata = false;
     }
 }

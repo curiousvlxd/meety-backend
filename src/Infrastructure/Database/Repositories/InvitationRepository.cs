@@ -18,15 +18,16 @@ public sealed class InvitationRepository(IApplicationDbContext context) : IInvit
         return response;
     }
     
-    public async Task CreateAsync(Invitation invitation, CancellationToken cancellationToken = default)
+    public async Task<Invitation> CreateAsync(Invitation invitation, CancellationToken cancellationToken = default)
     {
-        await context.Invitations.AddAsync(invitation, cancellationToken);
+        var response = await context.Invitations.AddAsync(invitation, cancellationToken);
+        return response.Entity;
     }
     
-    public async Task UpdateAsync(Invitation invitation, CancellationToken cancellationToken = default)
+    public async Task<Invitation> UpdateAsync(Invitation invitation, CancellationToken cancellationToken = default)
     {
-        context.Invitations.Update(invitation);
-        await Task.CompletedTask;
+        var response = context.Invitations.Update(invitation);
+        return response.Entity;
     }
     
     public async Task<Invitation?> Get(UserId inviteeId, MeetingId meetingId, CancellationToken cancellationToken = default)

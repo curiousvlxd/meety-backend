@@ -23,4 +23,10 @@ public sealed class UserRepository(IApplicationDbContext context) : IUserReposit
         var entity = await context.Users.AddAsync(user, cancellationToken);
         return entity.Entity;
     }
+    
+    public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken = default)
+    {
+        var entity = context.Users.Update(user);
+        return entity.Entity;
+    }
 }

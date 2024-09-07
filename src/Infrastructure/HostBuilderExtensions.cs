@@ -1,5 +1,6 @@
 ﻿
 using Domain.Entities.Invitation;
+using Domain.Entities.Meeting;
 using Domain.Entities.User;
 using Infrastructure.Database;
 using Infrastructure.Database.Abstractions;
@@ -67,6 +68,7 @@ public static class HostBuilderExtensions
     {
        builder.Services.AddScoped<IUserRepository, UserRepository>();
        builder.Services.AddScoped<IInvitationRepository, InvitationRepository>();
+       builder.Services.AddScoped<IMeetingRepository, MeetingRepository>();
     }
     
     private static void RegisterServices(this IHostApplicationBuilder builder)

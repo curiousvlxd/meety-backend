@@ -1,7 +1,7 @@
 ﻿using Api.Abstractions;
-using Api.Apis.Messengers.Telegram;
 using Api.Extensions;
-using UseCases.Features.Messengers.Telegram.Webhook;
+using UseCases.Features.Users.Get.ById;
+using UseCases.Features.Users.Get.Common;
 namespace Api.Apis.Users;
 
 public class GetCurrentUserEndpoint : IEndpoint
@@ -11,6 +11,7 @@ public class GetCurrentUserEndpoint : IEndpoint
         app.MapGet($"{Constants.UserApi}/current", GetCurrentUser)
             .MapToApiVersion(1)
             .WithTags(nameof(Constants.UserApi))
+            .Produces<UserResponse>()
             .ProduceProblems(StatusCodes.Status400BadRequest,
                 StatusCodes.Status401Unauthorized,
                 StatusCodes.Status404NotFound);
@@ -18,7 +19,10 @@ public class GetCurrentUserEndpoint : IEndpoint
 
     private static async Task<IResult> GetCurrentUser([AsParameters] UserServices services)
     {   
-        // await services.Mediator.Send(new HandleWebhookCommand());
-        return Results.Ok();
+       var userId = services.HttpContextAccessor.GetUserId();
+       var query = new GetUserByIdQuery(userId);
+       var user = await services.Mediator.Send(query);
+       
+       return user is null ? Results.NotFound() : Results.Ok(user);
     }
 }

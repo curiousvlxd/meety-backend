@@ -55,6 +55,8 @@ public static class HostBuilderExtensions
             var telegramBotClient = new TelegramBotClient(options.TelegramApiKey);
             return telegramBotClient;
         });
+        hostBuilder.Services.ConfigureTelegramBot<Microsoft.AspNetCore.Mvc.JsonOptions>(opt => opt.JsonSerializerOptions);
+        
         hostBuilder.Services.AddSingleton<ITelegramUpdateListener, TelegramUpdateListener>();
         hostBuilder.Services.AddScoped<ITelegramChatDistributor, TelegramTelegramChatDistributor>();
     }

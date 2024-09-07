@@ -9,6 +9,7 @@ WORKDIR /src
 COPY ["src/Api/Api.csproj", "src/Api/"]
 COPY ["src/UseCases/UseCases.csproj", "src/UseCases/"]
 COPY ["src/Infrastructure/Infrastructure.csproj", "src/Infrastructure/"]
+COPY ["src/Telegram.Bot/Telegram.Bot.csproj", "src/Telegram.Bot/"]
 COPY ["src/Domain/Domain.csproj", "src/Domain/"]
 RUN dotnet restore "src/Api/Api.csproj"
 COPY . .

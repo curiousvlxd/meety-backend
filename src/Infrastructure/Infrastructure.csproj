@@ -30,10 +30,15 @@
       <PackageReference Include="Telegram.Bot" Version="19.0.0" />
       <PackageReference Include="ZoomNet" Version="0.80.0" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\Telegram.Bot\Telegram.Bot.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Database\Migrations\" />
+      <Folder Include="MeetingService\Zoom\" />
+      <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+      <PackageReference Include="ZoomNet" Version="0.80.0" />
+      <ProjectReference Include="..\Telegram.Bot\Telegram.Bot.csproj" />
       <Folder Include="MeetingService\Zoom\" />
     </ItemGroup>
 

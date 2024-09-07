@@ -13,18 +13,18 @@ public class TelegramUserResponse : UserResponse
 
     public static async Task<TelegramUserResponse?> FromDomain(User user, ITelegramBotClient client)
     {
-        var chatMember = await client.GetChatMemberAsync(user.ChatId.Value, long.Parse(user.MessengerUserId.Value));
+        var chatMember = user.ChatId?.Value is null ? default : await client.GetChatMemberAsync(user.ChatId.Value.Value, long.Parse(user.MessengerUserId.Value));
         var userPhotos = await client.GetUserProfilePhotosAsync(long.Parse(user.MessengerUserId.Value));
         
         return new TelegramUserResponse
         {
             Id = user.Id.Value.ToString(),
-            MessengerUserId = chatMember.User.Id,
+            MessengerUserId = user.MessengerUserId.Value,
             MessengerType = user.MessengerType,
-            FirstName = chatMember.User.FirstName,
-            LastName = chatMember.User.LastName,
-            Username = chatMember.User.Username,
-            LanguageCode = chatMember.User.LanguageCode,
+            FirstName = chatMember?.User.FirstName,
+            LastName = chatMember?.User.LastName,
+            Username = chatMember?.User.Username,
+            LanguageCode = chatMember?.User.LanguageCode,
             UserProfilePhotos = userPhotos
         };
     }

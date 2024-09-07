@@ -34,7 +34,7 @@ internal class UserConfiguration : BaseEntityConfiguration<User>
                 value => new MessengerUserId(value));
         
         builder.Property(p => p.ChatId)
-            .HasConversion(chatId => chatId.Value,
+            .HasConversion(chatId => chatId.Value.Value,
                 value => new ChatId(value));
         
         builder.Property(u => u.MessengerType)

@@ -1,9 +1,9 @@
-using Infrastructure.Messenger.Telegram.TelegramUpdateListener.Commands;
+using Infrastructure.Messengers.Telegram.UpdateListener.Commands;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace Infrastructure.Messenger.Telegram.TelegramUpdateListener;
+namespace Infrastructure.Messengers.Telegram.UpdateListener;
 
-public class TelegramUpdateListener(TelegramBotClient telegramBotClient) : ITelegramUpdateListener
+public class TelegramUpdateListener(ITelegramBotClient telegramBotClient) : ITelegramUpdateListener
 {
     private readonly List<ITelegramCommand> _commands =
         [new StartCommand(), new HelpCommand()];

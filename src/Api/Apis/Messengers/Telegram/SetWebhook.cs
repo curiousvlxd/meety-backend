@@ -32,7 +32,7 @@ public class SetWebhookEndpoint : IEndpoint
         if(contract.AuthGuid != guid)
             return Results.Unauthorized();
         
-        await services.Bot.GetTelegramBotClient().SetWebhookAsync(contract.WebhookUrl);
+        await services.BotClient.SetWebhookAsync(contract.WebhookUrl);
         return Results.Ok();
     }
 }

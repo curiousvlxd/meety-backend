@@ -1,11 +1,11 @@
-using Infrastructure.Messenger.Telegram.ChatDistributor;
+using Infrastructure.Messengers.Telegram.ChatDistributor;
 using UseCases.Abstractions.Messaging;
 namespace UseCases.Features.Messengers.Telegram.Webhook;
 
-public sealed class HandleWebhookCommandHandler(IChatDistributor chatDistributor): ICommand
+public sealed class HandleWebhookCommandHandler(ITelegramChatDistributor telegramChatDistributor): ICommand
 {
     public async Task Handle(HandleWebhookCommand command, CancellationToken cancellationToken)
     {
-        await chatDistributor.GetUpdate(command.Update);
+        await telegramChatDistributor.GetUpdate(command.Update);
     }
 }

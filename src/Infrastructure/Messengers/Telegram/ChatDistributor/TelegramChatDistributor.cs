@@ -1,9 +1,9 @@
-using Infrastructure.Messenger.Telegram.TelegramBot;
-using Infrastructure.Messenger.Telegram.TelegramUpdateListener;
+using Infrastructure.Messengers.Telegram.UpdateListener;
+using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace Infrastructure.Messenger.Telegram.ChatDistributor;
+namespace Infrastructure.Messengers.Telegram.ChatDistributor;
 
-public class ChatDistributor(ITelegramBot telegramBot): IChatDistributor
+public class TelegramTelegramChatDistributor(ITelegramBotClient client): ITelegramChatDistributor
 {
     private readonly Dictionary<long, ITelegramUpdateListener> _listeners = new();
 
@@ -17,7 +17,7 @@ public class ChatDistributor(ITelegramBot telegramBot): IChatDistributor
         
         if (listener is null)
         {
-            listener = new TelegramUpdateListener.TelegramUpdateListener(telegramBot.GetTelegramBotClient());
+            listener = new TelegramUpdateListener(client);
             _listeners.Add(chatId, listener);
             await listener.ProcessUpdate(update);
             return;

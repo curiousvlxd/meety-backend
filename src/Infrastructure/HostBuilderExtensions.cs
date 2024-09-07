@@ -5,14 +5,16 @@ using Infrastructure.Database;
 using Infrastructure.Database.Abstractions;
 using Infrastructure.Database.Options;
 using Infrastructure.Database.Repositories;
-using Infrastructure.Messenger.MessengerOptions;
-using Infrastructure.Messenger.Telegram;
-using Infrastructure.Messenger.Telegram.ChatDistributor;
-using Infrastructure.Messenger.Telegram.TelegramBot;
+using Infrastructure.Messengers.Options;
+using Infrastructure.Messengers.Telegram.Bot;
+using Infrastructure.Messengers.Telegram.ChatDistributor;
+using Infrastructure.Messengers.Telegram.Service;
+using Infrastructure.Messengers.Telegram.UpdateListener;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Telegram.Bot;
 
 namespace Infrastructure;
 
@@ -20,28 +22,32 @@ public static class HostBuilderExtensions
 {
     public static void ConfigureInfrastructureLayer(this IHostApplicationBuilder hostBuilder)
     {
-        hostBuilder.ConfigureMessenger();
+        hostBuilder.ConfigureMessengers();
         hostBuilder.ConfigureDatabase();
-        hostBuilder.ConfigureTelegramBot();
+        hostBuilder.ConfigureMessengers();
         hostBuilder.RegisterRepositories();
         hostBuilder.RegisterServices();
     }
 
-    private static void ConfigureMessenger(this IHostApplicationBuilder hostBuilder)
-    {
+    private static void ConfigureMessengers(this IHostApplicationBuilder hostBuilder)
+    {       
         hostBuilder.Services.ConfigureOptions<MessengerOptionsSetup>();
+        var options = hostBuilder.Services.BuildServiceProvider().GetRequiredService<IOptions<MessengerOptions>>().Value;
+        hostBuilder.ConfigureTelegram(options);
     }
     
-    private static void ConfigureChatDistributor(this IHostApplicationBuilder hostBuilder)
-    {
-        hostBuilder.Services.AddScoped<IChatDistributor, ChatDistributor>();
-    }
-    
-    private static void ConfigureTelegramBot(this IHostApplicationBuilder hostBuilder)
-    {
+    private static void ConfigureTelegram(this IHostApplicationBuilder hostBuilder, MessengerOptions options)
+    {   
+        hostBuilder.Services.AddSingleton<ITelegramBotClient, TelegramBotClient>(sp =>
+        {
+            var telegramBotClient = new TelegramBotClient(options.TelegramApiKey);
+            return telegramBotClient;
+        });
         hostBuilder.Services.AddSingleton<ITelegramBot, TelegramBot>();
+        hostBuilder.Services.AddSingleton<ITelegramUpdateListener, TelegramUpdateListener>();
+        hostBuilder.Services.AddScoped<ITelegramChatDistributor, TelegramTelegramChatDistributor>();
     }
-
+    
     private static void ConfigureDatabase(this IHostApplicationBuilder hostBuilder)
     {
         hostBuilder.Services.ConfigureOptions<DatabaseOptionsSetup>();

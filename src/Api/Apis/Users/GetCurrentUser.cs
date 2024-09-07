@@ -18,7 +18,7 @@ public class GetCurrentUserEndpoint : IEndpoint
 
     private static async Task<IResult> GetCurrentUser([AsParameters] UserServices services)
     {   
-        await services.Mediator.Send(new HandleWebhookCommand());
+        // await services.Mediator.Send(new HandleWebhookCommand());
         return Results.Ok();
     }
 }

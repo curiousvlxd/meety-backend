@@ -1,5 +1,5 @@
 using Telegram.Bot.Types;
-namespace Infrastructure.Messenger.Telegram.TelegramUpdateListener;
+namespace Infrastructure.Messengers.Telegram.UpdateListener;
 
 public interface ITelegramUpdateListener
 {

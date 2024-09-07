@@ -1,5 +1,4 @@
-﻿using Infrastructure.Messenger.Telegram.ChatDistributor;
-using Infrastructure.Messenger.Telegram.TelegramBot;
+﻿using Infrastructure.Messengers.Telegram.Bot;
 using MediatR;
 using Telegram.Bot;
 namespace Api.Apis.Messengers.Telegram;
@@ -7,9 +6,9 @@ namespace Api.Apis.Messengers.Telegram;
 public class TelegramServices(
     ILogger<TelegramServices> logger,
     IMediator mediator,
-    ITelegramBot bot)
+    ITelegramBotClient botClient)
 {
     public ILogger<TelegramServices> Logger => logger;
     public IMediator Mediator => mediator;
-    public ITelegramBot Bot => bot;
+    public ITelegramBotClient BotClient => botClient;
 }

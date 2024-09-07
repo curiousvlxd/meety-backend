@@ -1,12 +1,12 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace Infrastructure.Messenger.Telegram.TelegramUpdateListener.Commands;
+namespace Infrastructure.Messengers.Telegram.UpdateListener.Commands;
 
 public interface ITelegramCommand
 {
     public string Name { get; } 
 
-    public Task Handle(Message message, TelegramBotClient client)
+    public Task Handle(Message message, ITelegramBotClient client)
     {
         return Task.CompletedTask;
     }

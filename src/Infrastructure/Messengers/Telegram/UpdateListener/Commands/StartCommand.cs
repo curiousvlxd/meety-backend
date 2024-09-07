@@ -1,6 +1,6 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace Infrastructure.Messenger.Telegram.TelegramUpdateListener.Commands;
+namespace Infrastructure.Messengers.Telegram.UpdateListener.Commands;
 
 public class StartCommand : ITelegramCommand
 {

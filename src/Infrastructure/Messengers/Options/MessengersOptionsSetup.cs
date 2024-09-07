@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-namespace Infrastructure.Messenger.MessengerOptions;
+namespace Infrastructure.Messengers.Options;
 
 public class MessengerOptionsSetup(IConfiguration configuration) : IConfigureOptions<MessengerOptions>
 {
-    private const string SectionName = "Messenger";
+    private const string SectionName = "Messengers";
 
     public void Configure(MessengerOptions options) => configuration.GetSection(SectionName).Bind(options);
 }

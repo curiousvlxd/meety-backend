@@ -1,4 +1,4 @@
-namespace Infrastructure.Messenger.MessengerOptions;
+namespace Infrastructure.Messengers.Options;
 
 public sealed record MessengerOptions
 {

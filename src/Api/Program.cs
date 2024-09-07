@@ -1,13 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Api;
 using Api.Configurations;
 using Infrastructure;
 using Infrastructure.Authentication;
-using Infrastructure.Logging;
-using Microsoft.AspNetCore.Http.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using UseCases;
 LoggingConfiguration.ConfigureSerilog();
 
@@ -19,13 +13,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.ConfigureInfrastructureLayer();
 builder.ConfigureUseCasesLayer();
 builder.AddServiceDefaults();
-builder.Services.AddControllers().AddNewtonsoftJson();
 RegisterHttpClients(builder);
 AddAuthentication(builder);
 AddAuthorization(builder);
 AddHttpAccessor(builder);
 ConfigureSwagger(builder);
-ConfigureSerialization(builder);
 builder.DisableHttp3();
 
 var app = builder.Build();
@@ -80,26 +72,5 @@ void ConfigureSwagger(IHostApplicationBuilder webApplicationBuilder)
         string[] discriminatorTypes = [];
 
         c.SelectDiscriminatorNameUsing(type => discriminatorTypes.Contains(type.Name) ? "$type" : null);
-    });
-}
-
-
-void ConfigureSerialization(IHostApplicationBuilder webApplicationBuilder)
-{
-    webApplicationBuilder.Services.Configure<JsonSerializerSettings>(options =>
-    {
-        options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-        options.Converters.Add(
-            new StringEnumConverter
-            {
-                NamingStrategy = new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()
-            });
-    });
-    webApplicationBuilder.Services.Configure<JsonOptions>(options =>
-    {
-        options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        options.SerializerOptions.WriteIndented = true;
-        options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        options.SerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
     });
 }

@@ -10,26 +10,7 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
-
-  <PropertyGroup Label="Package">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <Title>Telegram Bot API Client</Title>
-    <Description>This library gives you easy access to Telegram Bot API so you can start building useful bots for Telegram.</Description>
-    <PackageId>Telegram.Bot</PackageId>
-    <Authors>RoundRobin,Poulad,tuscen,Wizou</Authors>
-    <Copyright>Copyright © TelegramBots 2016-2024</Copyright>
-    <PackageIcon>package-icon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/TelegramBots/telegram.bot</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/TelegramBots/telegram.bot.git</RepositoryUrl>
-    <PackageTags>Telegram;Bot;Api;Payment;Inline;Games</PackageTags>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-  </PropertyGroup>
-
+  
   <PropertyGroup Label="Warnings">
     <NoWarn>$(NoWarn);CA1003</NoWarn> <!-- Change the event name to replace the type with a generic EventHandler,
                                            for example EventHandler<T>, where T is a valid EventArgs -->
@@ -58,14 +39,6 @@
     <NoWarn>$(NoWarn);IDE0079</NoWarn>
     <NoWarn>$(NoWarn);CS0419</NoWarn> <!-- Ambiguous reference in cref attribute -->
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="../../package-icon.png">
-      <Pack>true</Pack>
-      <PackagePath>/</PackagePath>
-    </None>
-    <None Include="../../README.md" Pack="true" PackagePath="/" />
-  </ItemGroup>
 
   <!-- Make build deterministic only in CI environment to make local development easier with non-trimmed paths -->
   <!-- TF_BUILD is a predefined variable in Azure Pipelines -->

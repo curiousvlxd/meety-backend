@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Configurations;
 
-internal class MeetingConfiguration : EntityConfiguration<Meeting>
+internal class MeetingConfiguration : IEntityTypeConfiguration<Meeting>
 {
-    public override void Configure(EntityTypeBuilder<Meeting> builder)
+    public void Configure(EntityTypeBuilder<Meeting> builder)
     {
         builder.ToTable("meetings");
         

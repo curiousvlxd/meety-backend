@@ -17,7 +17,7 @@ public class SetWebhookEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{Constants.TelegramApi}/telegram/webhook", SetHandleWebhook)
+        app.MapPost($"{Constants.TelegramApi}/set/webhook", SetHandleWebhook)
             .MapToApiVersion(1)
             .WithTags(nameof(Constants.TelegramApi))
             .ProduceProblems(StatusCodes.Status400BadRequest,

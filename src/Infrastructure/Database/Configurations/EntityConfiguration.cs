@@ -8,5 +8,6 @@ internal class EntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> 
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.Property(p => p.Created).ValueGeneratedOnAdd();
+        builder.Ignore(p => p.DomainEvents);
     }
 }

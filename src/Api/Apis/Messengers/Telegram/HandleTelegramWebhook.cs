@@ -8,7 +8,7 @@ using Telegram.Bot.Types.Enums;
 #endregion
 
 namespace Api.Apis.Messengers.Telegram;
-
+    
 public class HandleTelegramWebhookEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)

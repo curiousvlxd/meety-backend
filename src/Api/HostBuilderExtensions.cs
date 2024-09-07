@@ -106,6 +106,17 @@ public static class HostBuilderExtensions
                         Title = $"{builder.Environment.ApplicationName} v{description.ApiVersion}",
                         Version = description.ApiVersion.ToString()
                     });
+                
+                var i = 0;
+
+                options.CustomSchemaIds
+                (
+                    type => type.IsGenericType 
+                        ? $"{type.Name[..^2]}<{string.Join(", ", type.GenericTypeArguments.Select(arg => arg.Name))}>"
+                        : type.FullName is null
+                            ? $"{type}_{i++}"
+                            : type.Name
+                );
             }
 
             options.AddSecurityDefinition("Bearer",

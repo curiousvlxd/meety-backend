@@ -18,9 +18,9 @@ public class GetMeetingsByUserEndpoint : IEndpoint
                 StatusCodes.Status404NotFound);
     }
 
-    private static async Task<IResult> GetCurrentUser([AsParameters] Pagination pagination, [AsParameters] MeetingServices services)
+    private static async Task<IResult> GetCurrentUser(string userId, [AsParameters] Pagination pagination, [AsParameters] MeetingServices services)
     {   
-       var query = new GetMeetingsByUserQuery(pagination.UserId, pagination);
+       var query = new GetMeetingsByUserQuery(userId, pagination);
        var response = await services.Mediator.Send(query);
        return Results.Ok(response);
     }

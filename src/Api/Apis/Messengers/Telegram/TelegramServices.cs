@@ -1,5 +1,4 @@
-﻿using Infrastructure.Messengers.Telegram.Bot;
-using Infrastructure.Messengers.Telegram.UpdateListener;
+﻿using Infrastructure.Messengers.Telegram.UpdateListener;
 using MediatR;
 using Telegram.Bot;
 namespace Api.Apis.Messengers.Telegram;

@@ -23,5 +23,4 @@ public class User : Entity
             MessengerType = messengerType
         };
     }
-    
 }

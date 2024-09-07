@@ -14,7 +14,7 @@ public class User : Entity
     
     public static User Create(string username, MessengerUserId messengerUserId, ChatId chatId, MessengerType messengerType)
     {
-        return new User
+        var user = new User
         {
             Id = new UserId(Ulid.NewUlid()),
             Username = username,
@@ -22,5 +22,9 @@ public class User : Entity
             ChatId = chatId,
             MessengerType = messengerType
         };
+        
+        user.OnCreated();
+        
+        return user;
     }
 }

@@ -18,6 +18,13 @@ public sealed class UserRepository(IApplicationDbContext context) : IUserReposit
         return user;
     }
     
+    public async Task<PagedList<User>> GetByUsername(string username, Pagination pagination, CancellationToken cancellationToken = default)
+    {
+        var query = context.Users.Where(x => x.Username.Contains(username, StringComparison.OrdinalIgnoreCase)).AsNoTracking();
+        var response = await PagedList<User>.CreateAsync(query, pagination, cancellationToken);
+        return response;
+    }
+
     public async Task<User> CreateAsync(User user, CancellationToken cancellationToken = default)
     {
         var entity = await context.Users.AddAsync(user, cancellationToken);

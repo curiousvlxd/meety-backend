@@ -11,7 +11,7 @@ internal class InvitationConfiguration : EntityConfiguration<Invitation>
     {
         base.Configure(builder);
 
-        builder.ToTable("Meetings");
+        builder.ToTable("invitations");
 
         builder.Property(p => p.Id)
             .HasConversion(participationId => participationId.Value.ToString(),
@@ -28,7 +28,7 @@ internal class InvitationConfiguration : EntityConfiguration<Invitation>
             .IsRequired();
 
         builder.HasOne(e => e.Invitee)
-            .WithMany(u => u.ReceivedInvitations) 
+            .WithMany(u => u.ReceivedInvitations)
             .HasForeignKey(e => e.InviteeId)
             .IsRequired();
         
@@ -49,3 +49,4 @@ internal class InvitationConfiguration : EntityConfiguration<Invitation>
             .IsRequired();
     }
 }
+

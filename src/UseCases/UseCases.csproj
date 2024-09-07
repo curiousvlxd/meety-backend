@@ -20,7 +20,6 @@
 
     <ItemGroup>
       <Folder Include="Features\Meetings\Get\" />
-      <Folder Include="Features\Users\Get\ByUsername\" />
     </ItemGroup>
 
 </Project>

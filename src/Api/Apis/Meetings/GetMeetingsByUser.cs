@@ -9,9 +9,9 @@ public class GetMeetingsByUserEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{Constants.MeetingApi}/", GetCurrentUser)
+        app.MapGet($"{Constants.MeetingsApi}/", GetCurrentUser)
             .MapToApiVersion(1)
-            .WithTags(nameof(Constants.MeetingApi))
+            .WithTags(nameof(Constants.MeetingsApi))
             .Produces<PagedList<Meeting>>()
             .ProduceProblems(StatusCodes.Status400BadRequest,
                 StatusCodes.Status401Unauthorized,

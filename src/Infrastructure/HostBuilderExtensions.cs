@@ -6,16 +6,16 @@ using Infrastructure.Database;
 using Infrastructure.Database.Abstractions;
 using Infrastructure.Database.Options;
 using Infrastructure.Database.Repositories;
+using Infrastructure.MeetingService.Options;
 using Infrastructure.Messengers.Options;
-using Infrastructure.Messengers.Telegram.Bot;
 using Infrastructure.Messengers.Telegram.ChatDistributor;
-using Infrastructure.Messengers.Telegram.Service;
 using Infrastructure.Messengers.Telegram.UpdateListener;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
+using ZoomNet;
 
 namespace Infrastructure;
 
@@ -26,8 +26,8 @@ public static class HostBuilderExtensions
         hostBuilder.ConfigureMessengers();
         hostBuilder.ConfigureDatabase();
         hostBuilder.ConfigureMessengers();
+        hostBuilder.ConfigureZoom();
         hostBuilder.RegisterRepositories();
-        hostBuilder.RegisterServices();
     }
 
     private static void ConfigureMessengers(this IHostApplicationBuilder hostBuilder)
@@ -35,6 +35,17 @@ public static class HostBuilderExtensions
         hostBuilder.Services.ConfigureOptions<MessengerOptionsSetup>();
         var options = hostBuilder.Services.BuildServiceProvider().GetRequiredService<IOptions<MessengerOptions>>().Value;
         hostBuilder.ConfigureTelegram(options);
+    }
+
+    private static void ConfigureZoom(this IHostApplicationBuilder hostBuilder)
+    {
+        var options = hostBuilder.Services.BuildServiceProvider().GetRequiredService<IOptions<MeetingServiceOptions>>().Value;
+        
+        hostBuilder.Services.AddSingleton<IZoomClient, ZoomClient>(sp =>
+        {   var connectionInfo = new JwtConnectionInfo(options.ZoomApiKey, options.ZoomApiSecret);
+            var zoomClient = new ZoomClient(connectionInfo);
+            return zoomClient;
+        });
     }
     
     private static void ConfigureTelegram(this IHostApplicationBuilder hostBuilder, MessengerOptions options)
@@ -44,7 +55,6 @@ public static class HostBuilderExtensions
             var telegramBotClient = new TelegramBotClient(options.TelegramApiKey);
             return telegramBotClient;
         });
-        hostBuilder.Services.AddSingleton<ITelegramBot, TelegramBot>();
         hostBuilder.Services.AddSingleton<ITelegramUpdateListener, TelegramUpdateListener>();
         hostBuilder.Services.AddScoped<ITelegramChatDistributor, TelegramTelegramChatDistributor>();
     }
@@ -69,10 +79,5 @@ public static class HostBuilderExtensions
        builder.Services.AddScoped<IUserRepository, UserRepository>();
        builder.Services.AddScoped<IInvitationRepository, InvitationRepository>();
        builder.Services.AddScoped<IMeetingRepository, MeetingRepository>();
-    }
-    
-    private static void RegisterServices(this IHostApplicationBuilder builder)
-    {
-        builder.Services.AddSingleton<ITelegramService, TelegramService>();
     }
 }
